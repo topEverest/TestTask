@@ -1,0 +1,102 @@
+<div class="container mt-5">
+  <h2 class="text-center">Test Task</h2>
+  <div class="row mt-5">
+    <div class="col-6">
+
+      <!-- Working area -->
+      <form [formGroup]="form" class="form">
+        <div class="form-group">
+
+          <!-- Инпут мейла -->
+          <label for='email'>Email</label>
+          <input 
+            type="text"
+            id="email" 
+            formControlName="email" 
+            class="form-control" 
+            placeholder="Enter email"
+            (ngModelChange)="onChangesEmail($event)"
+          >
+          
+          <!-- Блок с ошибками -->
+          <div
+            *ngIf="form.get('email').touched && form.get('email').invalid"
+          >
+            <small *ngIf="form.get('email').errors?.required">
+              It is required field
+            </small>
+            <small *ngIf="form.get('email').errors?.pattern">
+              Email is invalid
+            </small>
+          </div>
+        </div>
+
+        <!-- Инпут пароля -->
+        <div>
+          <label for='password'>Password</label>
+          <app-custom-input 
+            formControlName="passwordCustomField"
+            [disInput]="disableInput"
+            (blockMessage)="message = $event"
+          >
+          </app-custom-input>
+
+          <!-- Блок с ошибками -->
+          <div
+            *ngIf="form.get('passwordCustomField').touched && form.get('passwordCustomField').invalid"
+          >
+            <small *ngIf="form.get('passwordCustomField').errors?.required">
+              It is required field
+            </small>
+            <small *ngIf="form.get('passwordCustomField').errors?.minlength">
+              Must be at least
+              {{form.get('passwordCustomField').errors?.minlength.requiredLength}}
+            </small>
+          </div>
+        </div> 
+
+        <!-- Сабмит кнопка нашей формы -->
+        <button 
+          class="btn btn-primary button" 
+          type="submit"
+          [disabled]="form.invalid || disableInput"
+          (click)="checkPassword()">
+            Submit
+          </button>
+
+          <!-- Сообщение о блокировке формы после 3 ошибочных паролей -->
+          <div class="bad" *ngIf="message">{{message}}</div>
+      </form>
+      <!-- End Working area -->
+
+    </div>
+    <div class="col-6">
+      Form value: {{ this.form.value | json }}
+      <hr>
+      <h3>Tasks</h3>
+      <ol>
+        <li>If you open the console, there is an error. Why?</li>
+        <li>Solve the issue.</li>
+        <li>Prevent form to be submitted if it's invalid.</li>
+        <li>RxJS: When the user enters an email address and it matches the email pattern save it to localStorage with timestamp as a key</li>
+        <li>RxJS: On 3rd submit if password incorrect lock the form</li>
+        <li>Add errors, placeholders and labels to the inputs.</li>
+        <li>app-custom-input must take an [input] and send an (output).</li>
+      </ol>
+
+      <h3>Notes</h3>
+
+      <ul>
+        <li>
+          The [app-custom-input] component must look like this: <img src="/assets/custom-input.png" loading="lazy" width="300">
+        </li>
+        <li>If you have any ideas about how to improve the performance, let us know.</li>
+        <li>Feel free to add any comments for us to better understand your decisions.</li>
+        <li>Good luck!</li>
+        <li>
+          P.S. You don't have to <strong>comment or remove</strong> something in order to solve the above issue ;)
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
